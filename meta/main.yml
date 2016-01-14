@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: CueSongs
+  description:
+  company: Cuesongs
+  license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 1.2
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - utopic
+        - vivid
+    - name: Debian
+      versions:
+        - etch
+        - jessie
+  categories:
+    - development
+    - web
+dependencies: []

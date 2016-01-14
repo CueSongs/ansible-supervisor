@@ -1,0 +1,10 @@
+[program:{{ app.name }}-{{ item.connection }}]
+process_name=%(program_name)s_%(process_num)02d
+command=php {{ app.root }}/artisan queue:work {{ item.connection }} {% if item.queues is defined %}--queue={{ item.queues }}{% endif %} --sleep=3 --tries=3 --delay=5 --memory=128 --daemon
+directory={{ app.root }}
+stdout_logfile={{ app.root }}/app/storage/logs/laravel.log
+redirect_stderr=true
+user={{ ansible_ssh_user }}
+numprocs={{ item.numprocs }}
+autostart={{ supervisor.autostart }}
+autorestart={{ supervisor.autorestart }}

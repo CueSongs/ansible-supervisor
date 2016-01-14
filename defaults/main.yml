@@ -1,0 +1,11 @@
+---
+supervisor: {
+    autostart: "false",
+    autorestart: "false",
+    connections: [
+        {
+            connection: "redis",
+            numprocs: 1
+        }
+    ]
+}
