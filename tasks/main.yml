@@ -11,10 +11,6 @@
   template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/{{ app.name }}-{{ item.connection }}.conf owner=root mode=0755
   with_items: supervisor.connections
 
-- name: Add supervisor configuration
-  supervisorctl: name={{ app.name }}-{{ item.connection }} state=started config=/etc/supervisor/conf.d/{{ app.name }}-{{ item.connection }}.conf
-  with_items: supervisor.connections
-
 - name: Reread supervisor configuration
   shell: "sudo supervisorctl reread"
 
@@ -25,7 +21,6 @@
   shell: "sudo supervisorctl start {{ app.name }}-{{ item.connection }}:*"
   with_items: supervisor.connections
 
-
 - name: Restart supervisor configuration
   shell: "sudo supervisorctl restart {{ app.name }}-{{ item.connection }}:*"
   with_items: supervisor.connections
@@ -34,6 +29,6 @@
   service: name=supervisor state=started enabled=yes
 
 - name: Schedule Restart on the Workers
-  cron: name="restart workers" minute="0" hour="0" state="present" job="supervisorctl restart {{ app.name }}-{{ item.connection }}"
+  cron: name="restart workers" minute="0" hour="0" state="present" job="supervisorctl restart {{ app.name }}-{{ item.connection }}:*"
   with_items: supervisor.connections
   sudo: yes
